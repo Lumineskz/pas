@@ -25,11 +25,12 @@ $pets = $stmt->get_result();
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <h1 class="logo">🐾 Pet Center</h1>
+            <h1 class="logo">🐾 Pet Adoption Center</h1>
             <div class="nav-links">
                 <a href="index.php">Browse Pets</a>
                 <a href="post_pet.php">Post Pet</a>
                 <a href="my_pets.php" class="active">My Pets</a>
+                <span class="user-info">👤 <?php echo htmlspecialchars($_SESSION['full_name']); ?></span>
                 <a href="logout.php" class="btn-logout">Logout</a>
             </div>
         </div>
@@ -50,14 +51,21 @@ $pets = $stmt->get_result();
                 <?php while ($pet = $pets->fetch_assoc()): ?>
                     <div class="pet-card">
                         <div class="pet-image">
-                            <div class="placeholder-image">🐾</div>
+                            <?php if (!empty($pet['image_url'])): ?>
+                                <img src="<?php echo htmlspecialchars($pet['image_url']); ?>" alt="<?php echo htmlspecialchars($pet['pet_name']); ?>">
+                            <?php else: ?>
+                                <div class="placeholder-image">🐾</div>
+                            <?php endif; ?>
                         </div>
                         <div class="pet-info">
-                            <h3><?= htmlspecialchars($pet['name'] ?? $pet['pet_name'] ?? 'Unnamed Pet') ?></h3>
-                            <p class="pet-description"><?= htmlspecialchars($pet['description']) ?></p>
+                            <h3><?= htmlspecialchars($pet['pet_name']); ?></h3>
+                            <p class="pet-description"><?= htmlspecialchars($pet['description']); ?></p>
                             
                             <div class="pet-details">
-                                <div class="detail-item"><strong>Species:</strong> <?= htmlspecialchars($pet['species']) ?></div>
+                                <div class="detail-item"><strong>Species:</strong> <?= htmlspecialchars($pet['species']); ?></div>
+                                <div class="detail-item"><strong>Breed:</strong> <?= htmlspecialchars($pet['breed']); ?></div>
+                                <div class="detail-item"><strong>Age:</strong> <?= htmlspecialchars($pet['age']); ?> years</div>
+                                <div class="detail-item"><strong>Gender:</strong> <?= htmlspecialchars($pet['gender']); ?></div>
                             </div>
 
                             <div class="form-actions" style="margin-top: 20px;">

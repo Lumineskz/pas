@@ -10,8 +10,6 @@ $query = "SELECT p.*, u.username, u.full_name
           WHERE p.status = 'available' 
           ORDER BY p.created_at DESC";
 $pets = $conn->query($query);
-
-$notification_count = getNotificationCount($conn, $_SESSION['user_id']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,12 +27,6 @@ $notification_count = getNotificationCount($conn, $_SESSION['user_id']);
                 <a href="index.php" class="active">Browse Pets</a>
                 <a href="post_pet.php">Post Pet</a>
                 <a href="my_pets.php">My Pets</a>
-                <a href="notifications.php" class="notification-link">
-                    🔔 Notifications
-                    <?php if ($notification_count > 0): ?>
-                        <span class="badge"><?php echo $notification_count; ?></span>
-                    <?php endif; ?>
-                </a>
                 <span class="user-info">👤 <?php echo htmlspecialchars($_SESSION['full_name']); ?></span>
                 <a href="logout.php" class="btn-logout">Logout</a>
             </div>
@@ -46,6 +38,14 @@ $notification_count = getNotificationCount($conn, $_SESSION['user_id']);
             <h2>Available Pets for Adoption</h2>
             <a href="post_pet.php" class="btn btn-primary">+ Post a Pet</a>
         </div>
+
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-error"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
+        <?php endif; ?>
 
         <?php if ($pets->num_rows === 0): ?>
             <div class="empty-state">
@@ -83,10 +83,7 @@ $notification_count = getNotificationCount($conn, $_SESSION['user_id']);
                             <p class="posted-by">Posted by: <?php echo htmlspecialchars($pet['full_name']); ?></p>
                             
                             <?php if ($pet['user_id'] != $_SESSION['user_id']): ?>
-                                <form method="POST" action="adopt_request.php" class="adopt-form">
-                                    <input type="hidden" name="pet_id" value="<?php echo $pet['pet_id']; ?>">
-                                    <button type="submit" class="btn btn-adopt">🏠 Adopt Me</button>
-                                </form>
+                                <a href="adoption_form.php?pet_id=<?php echo $pet['pet_id']; ?>" class="btn btn-adopt">🏠 Adopt Me</a>
                             <?php else: ?>
                                 <button class="btn btn-disabled" disabled>Your Pet</button>
                             <?php endif; ?>
