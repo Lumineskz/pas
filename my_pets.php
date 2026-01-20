@@ -25,7 +25,7 @@ $pets = $stmt->get_result();
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <h1 class="logo">🐾 Pet Adoption Center</h1>
+            <h1 class="logo">Pet Adoption Center</h1>
             <div class="nav-links">
                 <a href="index.php">Browse Pets</a>
                 <a href="post_pet.php">Post Pet</a>

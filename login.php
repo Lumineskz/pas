@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="auth-container">
         <div class="auth-box">
-            <h1>🐾 Pet Adoption Center</h1>
+            <h1>Pet Adoption Center</h1>
             <h2>Welcome Back</h2>
             
             <?php if ($error): ?>
