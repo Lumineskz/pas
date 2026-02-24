@@ -83,7 +83,7 @@ $pets = $conn->query($query);
                             <p class="posted-by">Posted by: <?php echo htmlspecialchars($pet['full_name']); ?></p>
                             
                             <?php if ($pet['user_id'] != $_SESSION['user_id']): ?>
-                                <a href="adoption_form.php?pet_id=<?php echo $pet['pet_id']; ?>" class="btn btn-adopt">🏠 Adopt Me</a>
+                                <a href="adoption_form.php?pet_id=<?php echo $pet['pet_id']; ?>" class="btn btn-adopt">Adopt Me</a>
                             <?php else: ?>
                                 <button class="btn btn-disabled" disabled>Your Pet</button>
                             <?php endif; ?>
